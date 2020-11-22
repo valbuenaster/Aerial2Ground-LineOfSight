@@ -1,0 +1,1051 @@
+Project Summary
+Developments in autonomous vehicles and sensor technologies are producing surveillance systems with
+increased capabilities, where the sensors and their platforms are characterized by a high degree of function-
+ality, reconfigurability, and redundancy. These unmanned ground and aerial vehicles are becoming crucial
+to both civilian and military applications because of their ability to remove or assist humans in carrying out
+dangerous yet vital missions. For example, they have been employed with some success in war zones as well
+as in rescue efforts following Hurricane Katrina. In particular, this proposed research activity will focus on
+networks of unmanned ground and aerial robotic sensors that are used for characterizing the mine threat in a
+region of interest, assisting human operators in search and rescue operations, or monitoring and surveilling
+complex environments. The paradigm that emerges from these applications is a set of hidden targets, mobile
+or stationary, that must be measured and possibly pursued by multiple heterogeneous sensors installed on
+mobile platforms. In all of these applications, the sensor network’s performance can be greatly enhanced
+by coordinating and implementing future sensor actions intelligently, based both on prior knowledge and on
+the information obtained by the sensors online.
+Intellectual Merit: The proposed research would develop a novel adaptive dynamic programming
+(ADP) approach for online hybrid modeling and control of robotic sensor networks. Although several
+authors have recognized the hybrid nature of coordinated robot control, this system-theoretic viewpoint
+has not been fully exploited in robotic sensor networks due to the lack of unified mathematical models of
+sensing components, such as, sensor measurements and targets, and sensing objectives, such as detection,
+classification, and tracking. The proposed research will overcome these difficulties by means of several
+interdisciplinary and novel contributions. The advantages of hybrid control and geometric motion planning
+algorithms are combined by designing a novel continuous-discrete interface (CDI) based on the new con-
+cepts of geometric field-of-view and C-targets. This CDI utilizes novel information-based potential fields
+and probability density functions to map the sensor state from the vehicle’s continuous configuration space
+to a sampled discrete-event graphical representation that is guaranteed to avoid obstacles and enable target
+detections. Another key contribution of the proposed research is the development of ADP algorithms for
+adapting both the discrete-event and continuous-state controllers online, subject to the sensors’ real-time
+measurements. The use of ADP for online learning and adaptation is particularly crucial to robotic sensor
+networks, because they are, by necessity, deployed in highly unstructured and uncertain environments, with
+little or no prior information about the obstacles or the targets. The proposed activity merges approaches
+inspired from recent trends in computer science, robotics, and engineering. The PIs are uniquely quali-
+fied to conduct this research because of their complementary expertise in hybrid systems, sensor networks,
+robotics, and computational intelligence, and their involvement in cross-disciplinary research and education,
+marked by secondary appointments and teaching activities in engineering and computer science.
+Broader impact: The proposed research would develop and demonstrate coordination and control al-
+gorithms that greatly improve the effectiveness of autonomous robotic sensor networks in three applications
+with great societal impact: demining, search and rescue operations, and ambient monitoring. Other appli-
+cations involving sensing and navigation in complex and obstacle-populated environments, such as rescue
+operations following hurricanes or earthquakes, or monitoring of industrial plants, would also greatly ben-
+efit from the proposed research. The results of the proposed research would be disseminated and possibly
+implemented in real systems through collaborations with British Aerospace Systems (BAE), the Center for
+Research on Complex Automated Systems (CASY) at the University of Bologna, Italy, and the Intelligent
+System Research Center (ISRC) at University of Ulster, UK. The PIs have a very successful track record at
+mentoring students, including females and underrepresented minorities. UNM is a U.S. Dept. of Education
+Institution With High Hispanic Enrollment, which gives Fierro a unique opportunity to involve underrepre-
+sented groups in a research area that is growing rapidly in New Mexico, an EPSCoR state. Through this
+activity, the PIs would train two Ph.D. students and recruit undergraduate students to participate in realistic
+PSG/USARSim robot simulations, and participate in stimulating dissemination activities, including robotic
+games, developed by Fierro to stimulate interest of Native American children in robotics, and CIG computer
+game competitions organized by the IEEE Technical Committee on Games, of which Ferrari is a member.
+1028506
+Collaborative Research: An Adaptive Dynamic Programming Approach to the
+Coordination of Heterogeneous Robotic Sensors Networks
+Developments in autonomous vehicles and sensor technologies are producing surveillance systems with
+increased capabilities, where the sensors and their platforms are characterized by a high degree of function-
+ality, reconfigurability, and redundancy. These unmanned ground and aerial vehicles are becoming crucial
+to both civilian and military applications because of their ability to remove or assist humans in carrying
+out dangerous yet vital missions. For example, they have been employed with some success in war zones
+as well as in rescue efforts following Hurricane Katrina [1]. In particular, this proposal will consider un-
+manned ground and aerial robotic sensors that can be used for characterizing the mine threat in a region
+of interest, assisting human operators in search and rescue operations, or monitoring and surveilling com-
+plex environments. The paradigm that emerges from these applications is a set of hidden targets, mobile
+or stationary, that must be measured and possibly pursued by multiple heterogeneous sensors installed on
+mobile platforms. In all of these applications, the sensor network’s performance can be greatly enhanced
+by coordinating and implementing future sensor actions intelligently, based both on prior knowledge and on
+the information obtained by the sensors online.
+The proposed research activity will develop a novel adaptive dynamic programming (ADP) approach for
+hybrid modeling and control of robotic sensor networks. Several authors, including the PIs, have recognized
+the hybrid nature of coordinated robot control [2–8]. However, this system-theoretic viewpoint has not been
+fully exploited in robotic sensor networks research due to the lack of unified and contained mathematical
+models of sensing components, such as, sensor measurements, and mobile geometric targets, and sensing
+objectives, such as target detection, classification, and tracking. The proposed research will overcome these
+difficulties and investigate online hybrid modeling and control of robotic sensors by means of the following
+novel contributions:
+• Analysis and application of a networked hybrid dynamical system (NHDS) formalism
+• ADP and Bayesian inference algorithms for hierarchical factored Markov decision models
+• Discrete-event/continuous-state interface design based on computational geometry
+• ADP algorithms based on potential navigation functions for continuous-state vehicle control
+• Concurrent algorithm development and validation via Player/Stage/Gazebo/USARSim Interface
+The proposed activity is a thoroughly cross-disciplinary effort that merges approaches inspired from re-
+cent trends in computer science, robotics, and systems engineering. The PIs have considerable expertise in
+hybrid systems, sensor networks, and computational intelligence, and have a longstanding mutual collabora-
+tion through which they have published numerous papers, trained both graduate and undergraduate students,
+and verified several offline sensor planning algorithms experimentally, using the COMET testbed [2, 9–14].
+However, the proposed activity would mark the first externally funded collaborative effort of the PIs, and
+would support educational and research activities in a new direction that integrates online learning and ADP
+with hybrid robotic sensor networks. Through the proposed activity, the PIs will collaborate closely with the
+Center for Research on Complex Automated Systems (CASY) at the University of Bologna, Italy, to extend
+and apply the methods developed in the proposed activity to alpine surveillance and rescuing operations
+in conjunction with the Italian Alpine Rescue Association. The PIs will also apply and demonstrate the
+algorithms developed in this activity to demining of littoral regions by unmanned aerial sensors in collabo-
+ration with British Aerospace Systems (BAE) in Honolulu (HI), and on ambient intelligence and robotics in
+collaboration with the Intelligent System Research Center (ISRC) at University of Ulster, UK [15].
+1
+1028506
+1
+Background and Motivation
+Several illustrious authors have recognized the hybrid nature of coordinated robot control [2–8, 16–19], and
+have utilized the three-layer hybrid architecture proposed in [20, 21] to model and analyze the interactions
+of a continuous-state vehicle with a discrete-event controller that makes high-level decisions on its optimal
+sequence of behaviors. Other approaches to the coordination of robotic networks include distributed control
+with an emphasis on communication protocols synchronous motion coordination [22]. An hybrid modeling
+approach to maintaining connectivity in a mobile multi-agent network was recently presented in [23]. A
+hybrid modeling framework for robust maneuver-based motion planning in nonlinear systems with symme-
+tries was proposed in [24], and a cell decomposition approach to geometric sensor motion planning was
+presented in [25]. Existing hybrid and distributed control approaches, reviewed comprehensively in [26],
+are very effective at maintaining a desired formation or connectivity in a sensor network, but they do not
+typically account for the geometries of the targets, obstacles, and sensors’ fields-of-view (FOVs). On the
+other hand, several robot motion planning approaches, described in [27,28], have been developed to account
+for the geometries of the robot and the obstacles, and avoid collisions. However, these approaches are not di-
+rectly applicable to robotic sensors because they are designed to prevent intersections between the vehicle’s
+geometry and the obstacles to avoid collisions, while the sensor’s FOV must intersect the geometry of the
+targets in order to obtain measurements. Most of the research relating sensor measurements to robot motion
+planning so far has focused on the effects that the uncertainty in the geometric models of the environment
+has on the motion strategies of the robot [29–35]. But, what remains to be addressed are the effects that
+these models have on the sensor’s strategies, i.e., how to plan and adapt the motion strategies that support
+the optimal sensor measurement sequence [36].
+In the proposed research, the advantages of hybrid control and geometric motion planning algorithms
+are combined by designing a continuous-discrete interface (CDI) for the hybrid system that is comprised of
+a novel sensor motion planning algorithm. Using a new concept known as C-targets, this CDI maps sensor’s
+states from the vehicle’s continuous configuration space to a sampled discrete-event graphical representation
+that is void of obstacles and enables target detections. According to a novel approach integrating roadmap
+methods with potential fields, the CDI is able to utilize a probability density function that is obtained by
+marginalizing the potential field defined from the information value of the targets. As a result, the potential
+function used by the CDI is also used to design the continuous-state controllers for the vehicles. We hope
+that, based on this novel development, we will be able to prove stability of the networked hybrid dynamical
+system (NHDS) presented in Section 2.1 through a separation principle that has been shown to hold when the
+discrete-event behaviors share a common Lyapunov function [8]. Another key contribution of the proposed
+research is the development of ADP algorithms for adapting both the NHDS discrete-event and continuous-
+state controllers online, subject to the sensors’ real-time measurements. The use of ADP for online learning
+and adaptation is particularly crucial to robotic sensor networks, because they are, by necessity, deployed
+in highly unstructured and uncertain environments in order to explore their workspace, and measure and
+pursue hidden targets with little or no prior information.
+2
+Proposed Research
+The hybrid network coordination and control problems investigated in the proposed activity are motivated
+by heterogeneous robotic sensor networks that are deployed to carry out sensing and motion tasks, such
+as, detecting, tracking, classifying, and pursuing one or more targets, avoiding obstacles and maintaining
+connectivity with a base station. A novel methodology based on ADP and hybrid control systems will be
+investigated to automate and optimize high-level decisions based on the feedback comprised of measurement
+data and environmental information, while simultaneously controlling the sensors to carry out the decisions
+subject to obstacles and targets that are sensed locally in real time. The methodology will be demonstrated
+through demining, search-and-rescue, and ambient-surveillance applications, using synthetic and physical
+testbeds available in the PIs’ laboratories (Section 4), and through collaborations with the industry, and with
+international research institutions and laboratories (Section 5).
+2
+1028506
+2.1 Problem Formulation: Cooperative Coordination and Hybrid Control Design
+Several authors, including the PI (R.F.), have recently demonstrated that the coordination and control of
+a network with multiple cooperating vehicles can be modeled by a hierarchical command and control ar-
+chitecture with the following modular components: (i) mission planning, (ii) trajectory planning, and (iii)
+vehicle control [1, 37]. The advantages of this modular architecture are twofold. From a practical point of
+view, it allows the vehicles to perform multiple missions by means of the same software and hardware, and
+to add or remove any vehicles equipped with the basic capabilities, without affecting the other system com-
+ponents [1, 38]. From a theoretical point of view, it will be shown in this proposal that the above modular
+architecture can be modeled by a well-known three-layer hybrid framework with tractable computational
+complexity, originally proposed and analyzed by several key authors, including the PI (R.F.), in [8, 20, 21].
+In the proposed research, the hybrid framework developed by the PI (R.F.) et al. in [8] will be extended to a
+networked hybrid dynamical systems (NHDS), comprised of N continuous-state plants (CSPs), representing
+N robotic sensors with dynamic equations,
+CSPi :
+xi (t) = fi [xi (t), ui (t)]
+ ̇
+yi (t) = hi [xi (t), (t)]
+i = 1, . . . , N
+(1)
+where xi ∈ Xi ⊂ Rn , ui ∈ Ui ⊂ Rm , and yi ∈ Yi ⊂ Rp are the state, control, and output of the ith vehicle.
+Each vehicle is equipped with a continuous-state controller (CSC),
+CSCi :
+ui (t) = ci [xi (t), yi (t), ri (t), (t)],
+i = 1, . . . , N
+(2)
+where ri ∈ Rp is the reference trajectory. The discrete-event parameter (t) ∈ {1, 2, . . .} is a deterministic
+scalar index that is incremented by an event function when a continuous-state event occurs. The refer-
+ence trajectory and discrete-event parameter are computed by a continuous-discrete interface (CDI) logic,
+described in Section 2.4, based on the planned mission’s tasks.
+In the proposed research, the mission planner initially will be modeled by a centralized discrete-event
+plant (DEP) and controller (DEC) that reside on a remote computational facility or onboard one of the
+vehicles. Later, multiple, decentralized mission planners will also be explored and investigated in this
+research. The DEP and DEC model and control, respectively, the coordination of future sensors’ tasks or
+behaviors. The three-layer HDS framework previously analyzed in the literature [8, 20, 21] considers a
+deterministic DEP represented by difference equations, or Petri nets. However, because of the probabilistic
+nature of the sensing tasks, in the proposed research, the DEP will be described by a partially-observable
+Markov decision process (POMDP). As was recently shown by the PI (S.F.) in [25], the coupled robotic
+sensor motion and observation process is a POMDP described by the tuple,
+DEP:
+Σ = {T, X , U(ξ), P(ξ(k + 1) | ξ(k), a(k)), P(z(k) | ξ(k), u(k), R[ξ(k), z(k), a(k), u(k)])} (3)
+where, k is the discrete time index, and T = {1, . . . , f } is a finite set of decision epochs. The state space
+X is a finite set of mutually-exclusive events, and the action space U(ξ, z) is the space of admissible action
+and test decisions a(k) and u(k), and P denotes a transition probability function. The subset of the DEP
+state denoted by ξ(k) represents the physical state of the robotic sensors and, thus, it is observable, and
+determined by ξ(k − 1) and a(k − 1). The subset of the DEP state denoted by z(k) represents the target
+characteristics and, thus, it is hidden up to k, and all of its possible outcomes must be propagated up to
+k according to the above transition probabilities. In this novel approach, the DEC outputs are classified
+as either action decisions, a, when they change the physical state of the system ξ (such as the decision on
+where to move the robotic sensor), or as test decisions, u, when they affect the system’s knowledge about
+the hidden state z (such as the decision to make a sensor measurement). Then, the utility of test decisions is
+given by the value of information of z, and the utility of action decisions is the reward associated with the
+physical state ξ.
+3
+1028506
+Let R : Ω(π(v)) → R denote the total utility or reward function associated with the chosen modes of
+behavior. Then, the discrete-event controller (DEC) is described by a class of admissible policies or control
+laws, referred to as strategy,
+DEC: σ = {γ0 , γ1 , . . . , γf −1 }
+(4)
+where γk maps the discrete state and output variables {ξ(k), z(k)} into the admissible decisions,
+{a(k), u(k)} = γk [ξ(0), a(1), u(1), . . . , ξ(k − 1), a(k − 1), u(k − 1)],
+(5)
+such that γk [·] ∈ R for all ξ(k) and z(k). Based on the information theoretic functions derived by the PI
+(S.F.) in [25,39], the robotic sensors’ utility can be assumed to be an additive reward function and, therefore,
+a value function,
+f −1
+E {R[ξ(k), z(k), a(k), u(k)]} ,
+V (k) =
+(6)
+k=0
+can be defined as the expected utility or cost-to-go of the DEC in (4), where E denotes the expectation with
+respect to the state variables. Then, the optimal strategy at k is the sequence of policies, σ ∗ , that maximizes
+V (k) given the POMDP in (3).
+Therefore, for the NHDS proposed in this research, the CSP is the tuple S = {I, Xi , Ui , Yi , fi , hi }i∈I ,
+where I = 1, . . . , N is the set of uinique identifiers representing the robotic sensors in the network. The
+CSP’s interface with the DEP (Σ) is given by a set of interface equations or CDI,
+Σ\S :
+S\Σ :
+ri (t) = αi [ξ(k), a(k), u(k)]
+(t) = β[ξ(k), a(k), u(k)]
+z(k) = vi [yi (t), ri (t)], i = 1, . . . , N
+(7)
+(8)
+where, the functions αi : X × R → Rp and β : X × R → {1, 2, . . .} are mappings in Σ\S. The event
+function vi : Yi ×Rp → Z is a mapping in S\Σ that tells the discrete-event system and controller which event
+caused (t) to change, such that knowledge about the hidden state z(k) can be updated based on real-time
+measurements and location of the vehicles. By utilizing this novel HSD framework, the proposed research
+will utilize the POMPD hidden state z(k) to represent unknown target(s) and workspace characteristics that
+influence high-level decisions regarding mission planning. At the same time, the reference trajectory and
+event parameter are computed by the CDI mappings in (7), as explained in Section 2.4. The remainder of
+this section is organized as follows. A novel approach to modeling mobile targets and robotic sensors based
+both on their geometries and dynamics is presented in Sections 2.2-2.2.1. The adaptive DEP and DEC are
+presented in Section 2.3, the adaptive CDI is described in Section 2.4, and the design of the adaptive CSC is
+described in Section 2.5.
+2.2 Modeling of Mobile Robotic Sensors
+This section describes how the robotic sensors will be modeled and simulated in the proposed research.
+Initially, we will focus on the online adaptation required for the sensor network to operate in a partially-
+observable workspace, with no prior knowledge of the targets and partial knowledge of the obstacles. Sub-
+sequently, adaptation of the vehicles’ controllers will also be considered to deal with partially-unmodeled
+dynamics and control failures online, using the approaches in [40–42]. Let W ⊂ R3 denote an Euclidean
+robotic sensor workspace populated with a set of fixed obstacles {Bj }j∈IB with geometries and positions
+that are partially unknown, and are estimated online using real-time sensor measurements. In addition to
+obstacles to be avoided, the robotic sensor workspace also is populated with a set of fixed and moving tar-
+gets {Tl }l∈IT (described in Section 2.2.1) that must be detected, classified, tracked, and possibly pursued
+by the sensors online, depending on the set of behaviors planned by the DEC. The proposed research will
+utilize a novel computational geometry approach to model the sensor’s field-of-view or visibility region as
+4
+1028506
+well as the targets online. This geometric modeling approach is inspired by classical robot motion plan-
+ning [27, 28], and characterizes any robotic sensor by its vehicle dynamics, (1), and by discrete geometries
+representing the vehicle’s geometry Ai ⊂ R3 , the sensor’s field-of-view (FOV) Si ⊂ R3 , and the onboard
+communication signal Ci ⊂ R3 . Examples of these discrete geometries are illustrated in Fig. 1 using four
+robotic sensors from the testbed COMET, which will be employed in this research activity (Section 4).
+Aj
+Tl
+Sj
+Ci
+Si
+Bi
+Figure 1: Vehicle geometry Aj , sensor’s FOVs Si and Sj , and communication signal Ci , are shown for a
+static camera and a mobile sensor in COMET [14]. A moving target geometry Tl and a fixed obstacle Bi are
+also shown in blue and red, respectively.
+The FOV and communication signal geometries can be assumed to have fixed position and orientation
+with respect to a moving Cartesian frame FAi , embedded in Ai , and, thus, have a configuration qi ⊂ xi
+that specifies their position and orientation with respect to a fixed Cartesian frame FW . The ground vehicle
+dynamics in W are represented by a nonholonomic, nonlinear model [43, 44],
+Mi (qi )qi + Bi (qi , qi ) + Gi (qi ) = ui ,
+ ̈
+ ̇
+i ∈ I,
+(9)
+where ui (qi ) is the ith robotic sensor’s inertia matrix, Bi (qi , qi ) is the fictitious force, Gi (qi ) is the grav-
+ ̇
+itational force, and ui is the torque input. The aerial vehicle dynamics are provided by a 6DOF nonlin-
+ear quadrotor model described in [1], with collective, roll, pitch, and yaw input commands, and a six-
+dimensional state vector comprised of the vehicle’s inertial position and orientation in FW . Thus, all robotic
+sensors can be described by the CSP in (1), and in addition to requiring a stabilizing feedback control law to
+follow the reference trajectory (as shown in Section 2.5), they must avoid the obstacles in W by preventing
+intersections between Ai and Bj , i.e., by guaranteeing that Ai ∩ Bj = ∅, for all i, j, and t.
+Dual to the obstacle-avoidance problem is the target-measurement problem, as an intersection between
+the FOV geometry Si and the geometry of a target Tl must take place, i.e. Si ∩ Tl = ∅, in order for the ith
+sensor to be able to obtain a vector of measurements mi about zl . In standard estimation theory, a sensor
+that obtains a vector of measurements is typically modeled as a deterministic, possibly-nonlinear, vector
+function of the state and of a random vector representing the sensor noise or measurement errors. In many
+sensor applications, however, the target state to be estimated, and the sensor measurements also are random
+variables with arbitrary probability distributions [45–48]. Therefore, a more general measurement model
+that has been proposed in the sensor networks literature is the conditional probability mass function (PMF),
+Pr(mi (k)|zl (k), λi (k)) =
+Pr(mi (k), zl (k), λi (k)) / [Pr(zl (k))Pr(λi (k))], if Si ∩ Tl = ∅
+0, if Si ∩ Tl = ∅
+k = 1, . . . , f
+(10)
+where λi is a vector of sensor characteristics, such as sensor mode and measurement errors. This sensor
+model assumes that mi , zl , and λi are discrete random variables with finite ranges M, Z, and Λ, respectively.
+Continuous random variables are considered using an analogous model based on the joint probability density
+function [46]. The joint PMF Pr(mi (k), zl (k), λi (k)) is a probabilistic description of the measurement
+5
+1028506
+process that can be learned from data, as shown by the PI (S.F.) in [47], and is factorized as in (10) because
+the target state and the sensor characteristics typically are independent [25,47,49]. The priors Pr(zi (k)) and
+Pr(λi (k)) are computed from environmental maps of W and target information, when available. Otherwise,
+they are assumed to be uniformly distributed. Various sensors, including infrared, ground penetrating radars,
+and synthetic aperture radars, have been modeled offline using (10) for demining, surveillance, and radar
+target tracking applications [45–48]. In the proposed research, online Bayesian learning algorithms will be
+developed using the expectation-maximization approach [50] to incrementally update both the sensor’s joint
+PMF and priors in (10) based on real-time sensor measurements.
+2.2.1
+Modeling of Static and Mobile Targets
+The purpose for deploying robotic sensor networks in monitoring, rescue, or surveillance applications is
+to be able to detect, classify, track, and, possibly, intercept one or more targets that may be either fixed
+or moving in W. There is considerable precedence in the sensor tracking and estimation literature for
+modeling target tracks by piece-wise Markov motion models in order to estimate the target state from mul-
+tiple, distributed sensor measurements [51]. However, to our knowledge, Markov target motion models
+have never been used as a feedback to sensor coordination and control algorithms. In the proposed re-
+search, real-time sensor measurements will be used to update geometric Markov models of the targets,
+using existing SLAM algorithms running on the COMET robots’ onboard computers. Using the approach
+presented in Section 2.3, the target models will be used to adapt the DEP and DEC, using a graphical
+ADP approach. Through the NHDS architecture, the adaptive discrete-event mission and motion plans will
+then be used to generate smooth and continuous reference signals used by the robotic sensors to carry out
+the tasks locally. Let Tl ⊂ W denote the geometry of the lth target, which is assigned a unique iden-
+tifier l ∈ IT using an existing multisensor-multitarget assignment algorithm [51]. To each target in W
+there is associated a hidden target variable zl that is discrete and random, with a finite range Z containing
+all possible target classifications. While zl is hidden, it can be inferred from the set of sensor measure-
+ments, M (k) = {m1 (1), m2 (1), . . . , mN −1 (k), mN (k)}, obtained by the network up to time k, using
+the probabilistic sensor model in (10). As an example, the target classification range may be given by
+Z = {person, vehicle, . . . , clutter}, and the sensor measurements may consist of target features that are
+obtained when Tl lies in the sensor’s FOV, Si .
+The motion of each target is modeled as a continuous-time Markov process, where, we say that xt is a
+continuous-time Markov process if for 0 ≤ t0 < · · · < tk−1 < tk < t we have Pr(xt ∈ B|xk = sk , xk−1 =
+sk−1 , · · · , x0 = s0 ) = Pr(xt ∈ B|xk = sk ) where Pr denotes the probability function, and s1 , . . . , sk ∈ X
+are realizations of the state space X . Now, let the random variables θTl and v Tl represent the lth target’s
+heading and velocity, respectively. Assuming the target’s heading and velocity are constant during every
+interval ∆t = (t+1 − t ),  = 1, 2, . . ., where ∆t is not necessarily constant, the target motion can be
+modeled as a continuous-time Markov process with a family of random variables {xTl , θTl , v Tl }, where
+xTl ∈ W is the lth target position at t. Then, a three-dimensional real-valued vector function maps the
+family of random variables {θTl (t), v Tl (t)} into the random vector xTl (t) at every time t ∈ [t0 , tf ], such
+that the value of the target motion process is given by,
+xTl (t) = v Tl (t)[cos θTl (t)
+ ̇
+sin θTl (t)]T ,
+(11)
+and, therefore, the motion of target l is a Markov process. The third component of the vector function is
+the identity function. It follows that θTl and v Tl are piece-wise constant, while xTl has discontinuities at
+the time instants t ,  = 1, . . . , ρ, when target l changes its heading and velocity. Let {xTl }=1,...,ρ denote
+
+the set of target positions at which these discontinuities occur. Then, by integrating the linear differential
+equation (11) over every interval ∆t with initial condition xTl , the position of the lth target at any time t
+
+T
+T
+can be obtained as a function of the sequence of random variables {xTl , v l , θ l }=1,...,ρ ≡ {P }=1,...,ρ also
+
+known as Markov motion parameters,
+T
+T
+T
+xTl (t) = xTl + v l (t − t )[cos θ l sin θ l ]T , t ≤ t < t+1
+
+(12)
+6
+1028506
+where, the Markov motion parameter values P only depend on the values of the previous time step P−1 ,
+and remain constant during the time interval ∆t . It follows that the target motion is properly represented
+by the joint probability density function on P , denoted by Pr(P |P−1 ) for  = 1, . . . , ρ. In summary, the
+set of targets detected by the sensor network in W is the tuple {IT , Tl , Z, Pr(P |P−1 )}∀, l∈IT . Then, the
+spatio-temporal geometry of a moving target can be obtained by sliding Tl along the track (12), and the joint
+PDF on P used to evaluate the value of information.
+2.3 Adaptive Discrete-Event Plant (DEP) and Controller (DEC)
+Recently, POMDPs have been proposed as a possible formalism for high-level decision making and co-
+ordination in multiagent systems involving concurrent actions, and hidden state estimation in stochastic
+environments [52]. Recent results in machine learning [53], and in robotic sensor networks [25], have
+also indicated that POMDPs are an ideal paradigm for modeling robot motions and behavior in uncertain
+and unstructured environments. Although early approaches to learning multiagent coordination resulted in
+poor convergence, because they ignored the hierarchy of the problem structure, there presently exist ef-
+fective algorithms for computing optimal strategies in factored Markov processes, also known as dynamic
+Bayesian networks (DBNs) [52]. In fact, the PI (S.F.) recently demonstrated the use of DBN algorithms for
+determining the optimal path of a robotic sensor network offline, in a complex workspace with distributed
+targets [25]. The main challenges to extending the existing algorithms to online multiagent coordination for
+an NHDS are learning the transition probability function online, maintaining a factored POMDP structure,
+and limiting the dimensionality of the state and action spaces for a large number of robotic sensors N .
+The proposed research will seek to overcome these challenges by means of a novel graphical approach
+that learns the transition probability function from prior workspace information offline, and then refines it in-
+crementally over time by an online Expectation-Maximization (EM) inference algorithm based on adaptive
+dynamic programming. A compact hierarchical, factored DBN representation of the POMDP will be con-
+structed by pruning and folding a graphical representation of the robotic sensor network obtained from its
+physical and communication graphs, described below. Pruning is conducted using a novel label-correcting
+incremental algorithm recently developed by the PI (S.F.) in [25, 39], based on Bellman’s principle of opti-
+mality. Since this label-correcting algorithm prunes and folds a graphical representation of a robotic sensor
+incrementally over time, it is very well suited to online applications. It was shown in [25, 39] that the re-
+sulting DBN has a hierarchical, factored form in which only the leaf nodes produce observations (z), and
+the internal nodes (ξ) are physical states of the robot that generate a sequence of observations according to
+the factorized sensor model in (10). The PI (S.F.) also showed that this DBN does not have a complexity
+problem provided the robotic sensor’s physical state, ξ, is observable, e.g., thanks to an onboard global posi-
+tioning system (GPS). If ξ is not observable, then the solution of the POMDP may may require information
+blocking or the use of limited memory influence diagrams.
+In the proposed research, the label-correcting correcting algorithm developed in [25,39] will be modified
+and extended to the case of a network of robotic sensors, where selected transition probabilities are learned
+online as a result of real-time measurements and information obtained from the targets and the workspace.
+One of the key challenges of the proposed research is to combine the N graphs from the N robotic sensors
+into a unique low-dimensional network representation that captures a subset of the coordination strategies,
+including the optimal strategy σ ∗ . At the mission-planning level each robotic sensors is represented by a
+physical graph, or roadmap, that captures the physical and geometric constraints on the dynamics, control,
+and sensing of each robotic sensor, and by a communication graph that captures the communication con-
+straints of each robotic sensor. As shown in Section 2.4, the roadmap is a directed graph, Gpi = (Ci , Epi ),
+where Ci = {c1 , c2 , . . .} is a set of nodes representing robot configurations sampled from the configuration
+space, and Epi is a set of edges, where an edge (ci , cj ) ∈ Epi represents an obstacle-free reachable path from
+ci to cj . The communication graph Gci = (Ci , Eci ) is an undirected graph representing the communication
+network, where Eci is a set of edges, and an edge (ci , cj ) ∈ Eci represents an obstacle-free reachable path
+from ci to cj . The coordination of the network of N robotic sensors is modeled by a directed control graph
+H = (C, E) that is used to optimally control, or plan the mission of the network. Once H is designed, it is
+7
+1028506
+pruned and folded into the hierarchical, factored DNB representation of the DEP in (4).
+The design of the control graph H is based on the tasks associated with the mission selected by an
+operator. Let K = { avoid obstacles, minimize distance, search targets, classify targets, track targets, rescue
+targets, maintain formation, carry payload, . . . } = {κι }ι∈IK represent the set of all possible tasks of the
+sensor network, where IK is the index set of K. A human operator typically selects the mission to be
+carried out by the network and, thus, the subset of tasks that defines the admissible behaviors of the robotic
+sensors, IU ⊂ IK , over the horizon T of the DEP. With each task κι there is associated a cost represented
+by an adaptive potential U ι (q, t) that is activated when ι ∈ IU . A novel adaptive potential based on the
+value of information is proposed in Section 2.4 for “search-targets”, “classify-targets”, and “track-targets”
+tasks. For all other tasks, attractive or repulsive potentials can be defined based on the existing literature on
+potential field methods [28,43,54,55]. For example, an adaptive and additive repulsive potential is proposed
+in Section 2.4 for obstacle avoidance, and an attractive potential based on a structural force that holds a
+formation together was proposed by the PI (R.F.) in [3] for the “maintain-formation” task. An attractive
+potential referenced to the targets’ position mapped into configuration space can be defined for the “rescue-
+targets” task, and so on. Besides activating the potentials utilized by the adaptive CDI proposed in Section
+2.4, the mission selection defines the DEP action space of all admissible test and action decisions, indexed
+by IU , and represented by action nodes in the DBN.
+The DEP state space is represented by the control graph, which is obtained from the set of graphs
+{Gpi , Gci }i=1,...,N . Given the initial ith robotic sensor’s configuration qi0 = qi (t = k) for k = 1, the
+corresponding node in Gpi and Gci can be tagged (Fig. 2(b)), and used as the root of two connectivity trees
+Tpi = (Ni , Epi ) and Tci = (Ni , Eci ) that are grown by connecting qi0 to its adjacent nodes in the respective
+graphs. Each adjacent node thereafter is connect to its adjacent nodes, and each tree is pruned incrementally
+using the principle of optimality [25, 39]. Where, it can be easily shown that Ni ⊂ Ci , Epi ⊂ Epi , and
+Eci ⊂ Eci . The directed control graph H is then obtained by letting C = Ni and E = Epi ∩ Eci , maintaining
+the arc directions in the connectivity trees, such that H represents all reachable configurations that maintain
+communications between the robots. The control graph is then folded into an NDB representation of the
+physical state evolution, with transition probabilities that are either equal to zero or one depending on the
+values in the adjacency matrix of H. Nodes sampled from a C-target (described in Section 2.4) are also
+tagged and augmented with a child node comprised of the corresponding target variable, indicating it can be
+measured when the sensor is in its parent state. Finally, by augmenting the NDB with the action and decision
+nodes, and the potentials defined above, the final model of the DEP in (3) is obtained and utilized to compute
+the optimal strategy for future action and test decisions using, for example, the following Q-learning rule:
+Q[ξ(k), a(k), u(k)] ← (1 − φ)Q[ξ(k), a(k), u(k)] + φ{U [ξ(k), k] + γ k
+max
+Q[ξ(k + 1), a(k), u(k)]}
+u(k),a(k)∈U
+where φ ∈ (0, 1), R[·] = U [·] is the immediate reward evaluated by the potential field in (13), and γ k is
+the discount factor. Then, assuming two functions Q(·) and V (·) that satisfy Bellman equation exist, they
+specify an optimal greedy policy σ ∗ , where:
+V [ξ(k + 1)] =
+max
+u(k+1),a(k+1)∈U
+∗
+Q[ξ(k + 1), a(k + 1), u(k + 1)], and γk = arg max{Q[ξ(k), a(k), u(k)]}
+The proposed research will also investigate several frameworks for hierarchical reinforcement learning, such
+as, MAXQ [56] and HAMs [57]. Through an ongoing collaboration with the author of HAM, Professor Parr
+at Duke University, the PIs will develop online versions of these algorithms to adapt σ over the POMDP
+horizon T , subject to the real-time data information collected by the robotic sensors from the targets and
+the workspace. The following section describes how the physical and communication graphs are built as the
+sensors explore their workspace, and how they are used to provide an interface between the DEC and DEP
+described in this section, and the CSP and the CSC described in Section 2.5.
+8
+1028506
+2.4 Adaptive Continuous-Discrete Interface (CDI) Logic
+The adaptive continuous-discrete interface (CDI) logic for coordinating and controlling the robotic sensor
+network consists of a novel adaptive trajectory planner that maps the continuous configuration space of a
+robotic sensor into a discrete, sampled graphical representation. The adaptive CDI that will be developed
+in this research is inspired by robot path planning methods originally developed by the computer science
+community for obstacle avoidance [27, 28]. These methods, however, are not directly applicable to robotic
+sensors because they do not support sensing objectives, such as target detection, classification, and tracking.
+The proposed approach to designing the CDI falls under the class of potential field methods, but while it
+utilizes a potential function to act locally and control the vehicle online, it also builds a global physical
+graph, also known as roadmap, to plan its path globally in W. Potential field methods are very effective for
+online robot motion planning, allowing the robot to avoid collisions with obstacles that are sensed during
+the motion, while navigating toward a goal configuration [43, 58]. They may, however, cause the robot to
+get stuck in local minima of the potential function, e.g., due to narrow passages between closely-spaced
+obstacles, and, therefore are usually coupled with an escape plan, such as to “fill” the minima, and follow a
+new local path generated via random-walk algorithms.
+FA
+T
+A
+B
+θs
+S
+CT
+(iv) 
+CB
+(v)
+(vi) 
+(i)
+(vii)
+(iii)
+(ii)
+(a)
+(b)
+Figure 2: C-obstacle (ii) and C-target (iii) (solid lines) obtained for the sensor in (i); adaptive roadmap
+construction starting with an initial milestones (iv) and connecting to a local minimum (dashed circle) in
+(v), then to neighboring milestones (white circles) in (vi) to maintain connectivity (vii).
+The proposed research will develop an adaptive trajectory planning approach for determining the sensor
+path that supports the optimal measurement sequence through three novel key contributions: (1) the def-
+inition of C-targets; (2) a unique adaptive potential function based on the targets’ information value that
+can be utilized for online navigation, control, and global sampling; and, (3) a hybrid potential/probabilistic
+approach that allows the robotic sensors to act locally, while thinking globally. Let the configuration space
+C = W × Θ denote the space of all possible robot configurations q ≡ [x y θ]T , where Θ = [θmin , θmax ]
+is the range of possible robot orientations, and (x, y) and θ denote the robot coordinates and orientation in
+FW , respectively. The robot identifier i ∈ I will be omitted in this section for simplicity. A fundamental
+paradigm utilized by obstacle avoidance algorithms [28] is that of C-obstacle, which consists of the subset
+of C that causes collisions with at least one obstacle in W, i.e., CB i ≡ {q ∈ C | A(q) ∩ Bi = ∅}, where A(q)
+denotes the subset of W occupied by the vehicle geometry A when the robot is in the configuration q. The
+union n CB j is the C-obstacle region, and the obstacle-free robot configuration space Cf ree is defined as
+j=1
+the complement of the C-obstacle region in C. Therefore, any robot configuration chosen from Cf ree avoids
+intersections between the vehicle geometry A and the obstacles’ geometries. In the presence of targets, q
+must both avoid intersections between A and the obstacles, and enable intersections between the sensor’s
+9
+1028506
+FOV and the targets’ geometries in order to make sensor measurements. Therefore, in the proposed research,
+the targets are treated as the dual of the obstacles, and the subset of C that enables intersections with Tl is
+identified and computed by introducing the following definitions. The field-of-view of a sensor mounted on
+A is a closed and bounded subset S(q) ⊂ W such that the measurement set of a target located at any point
+p ∈ S(q) can be obtained by the sensor when the robot occupies the configuration q ∈ C. Then, the target Tl
+in W maps in the robot’s configuration space, C, to the C-target region CT l = {q ∈ C | S(q) ∩ Tl = ∅}.
+The relationship between a C-target and a C-obstacle is illustrated in Fig. 2(a). It can be seen that since S
+is embedded in A, the vehicle motion must be planned in concert with the sensor measurements, and the
+robotic sensor must simultaneously avoid obstacles while searching for targets.
+In the proposed research, each mission task is represented by an adaptive and additive potential function
+U ι that is either attractive or repulsive, and is indexed by ι ∈ IK . As an example, suppose the network’s
+tasks are to avoid obstacles (ι = 1) and to maximize the information value associated with the classification
+of targets (ι = 2). Where the information value of Tl , denoted by Hl , is defined as the expected entropy
+reduction of zl , conditioned on M (k), and can be computed from (10) as shown in [39]. Then, all attractive
+potentials generated by the targets are combined with all repulsive potentials generated by the obstacles, and
+the sensor’s potential field is given by,
+(ι=1)
+U ι (q, t) =
+U (q, t) =
+ι∈{a∗ ,u∗ }
+Uj
+(ι=2)
+Ul
+(q, t)rep +
+j∈IB
+(q, t)att .
+(13)
+l∈IT
+Based on the concept of C-targets, a novel attractive potential function is defined for the targets,
+α
+Ul (q, t)att = η (1 − βHl (t) exp −
+ρ2 (q, t)
+l
+,
+α
+2βHl (t)
+where
+ρl (q, t) ≡ min ||W (x − q)||,
+x∈CT l
+(14)
+η, α, and β are user-defined scaling parameters, || · || is the Euclidean norm, and W is a diagonal and
+positive definite weighting matrix. It can be shown that this novel potential function satisfies the following
+properties: it is a increasing function of the shortest distance from Tl , denoted by ρl ; when ρi → ∞ all
+targets generate the same potential; and, given the same distance between two targets, the target with the
+higher information value has lower (more attractive) potential, as well as a steeper gradient for the same
+robot configuration q. To the best of our knowledge, the proposed approach is the first method to utilize the
+value of information to build a potential navigation function.
+Another important and novel idea in the proposed research is a probability density function obtained by
+marginalizing the exponential of the potential function,
+Pc (q, t) =
+e−U (q,t)
+−U (q,t) dq
+Ce
+(15)
+which can be sampled to produce high densities of sensor configurations in regions of lower, more attrac-
+tive potential (e.g., C-targets with high information value), while avoiding sensor configurations in regions
+of high, repulsive potential (e.g., C-obstacles). In the proposed approach, a novel online direct sampling
+procedure will be utilized to construct the physical graph or roadmap starting with the present sensor config-
+uration c1 = q(t), and sampling additional configurations or milestones, c2 , c3 . . ., from the neighborhood of
+q(t) in C, as illustrated in Fig. 2(b) (see [59] for an introduction to direct sampling methods). Subsequently,
+a standard local planner described in [28] is used to connect milestones with straight obstacle-free paths in
+Cf ree , represented by edges in Ep , such that the physical graph Gp is grown incrementally over time, as the
+robot explores the workspace W. The purpose for building the physical graph is twofold. By considering
+the physical graphs of all N robotic sensors, a global control graph H can be constructed and used to obtain
+the DEP and DEC (Section 2.3). Where, H is a global discrete description of W that, like classical roadmap
+methods [49], is computationally very efficient. Also, the physical graph is used by the robotic sensor to
+escape local minima of U in real time, as shown in Fig. 2(b).
+10
+1028506
+Although the proposed approach is not resolution complete, its effectiveness at capturing the connec-
+tivity of the configuration space can be greatly improved by using the bridge test to sample configurations
+in narrow passages, as shown by the PI (S.F.) in [49]. Another advantage of the proposed approach over
+existing algorithms is that, by using potential functions that are additive both with respect to the targets and
+the obstacles, U is rapidly updated based on new targets and obstacles as they are detected online. Since U is
+used both at the discrete and the continuous levels of the NHDS, both the CSC described in the section, and
+the DEP milestone sampling process adapt online with U . With the appearance of new targets, new mile-
+stones are automatically added to H from the corresponding C-targets. Milestone-removal algorithms will
+be developed in this research, such that existing configurations can be removed from H when new obstacles
+are detected, or when a target’s information value goes to zero as a result of new sensor measurements.
+2.5 Adaptive Continuous-State Controller (CSC)
+Each robotic sensor is equipped with an adaptive continuous-state controller (CSCi ) that accepts high-level
+test and action decisions, translated into a reference signal r(t) by the CDI presented in the previous section,
+and maps them into feedback control inputs for each robotic sensor (or CSPi ). The adaptive CSC that will be
+developed in the proposed research is based on potential field controller design [43], but it differs from the
+designs previously proposed in the literature in that it utilizes an adaptive potential function and an adaptive
+CSP. Two approaches will be considered and compared in this research. In the first approach, the gradient
+of U (q, t) is used to produce a reference trajectory r(t) in C. A nonlinear feedback controller in the form (2)
+will be developed using a novel adaptive critic approach that refines the control law based on the adaptive
+potential function, and on online observations of xi . In this case, additional control design objectives, such
+as transient response specification, and robustness are also met by the feedback controller. As a result, the
+adaptive CSC learns the CSP dynamics online and adapts to unmodeled effects and parameter variations, in
+the event of modeling errors or changes due to aging or damages. To the best of our knowledge, potential-
+field adaptive critic controllers have not been previously investigated in the literature. Based on its definition
+(13), the adaptive potential function is a natural candidate for the utility function and, thanks to its special
+properties, outlined in Section 2.4, it will be utilized to construct a Lyapunov function for proving closed-
+loop stability of the adaptive CSC and, then, of the overall NHDS, using multiple Lyapunov function theory.
+The second approach that will be investigated in this research uses the adaptive potential function in
+(13) directly as an input to the vehicle, by defining a CSC of the form,
+ui (t) = − U (q, t) + d(q, q)
+ ̇
+(16)
+originally proposed in [43] for a static potential field. Where represents the gradient with respect to q,
+and d(q, q) is an adaptive dissipative force. In order to guarantee a finite potential near the obstacles, the
+ ̇
+repulsive potential is defined as,
+Uj (q, t)rep =
+1
+2 μ(
+0
+1
+b (q,t)+b
+j
+−
+1 2
+)
+0
+if
+if
+b (q, t)
+i
+b (q, t)
+j
+≤ 0
+> 0
+,
+where
+j (q, t)
+≡ min ||W (x − q)|| (17)
+x∈CBj
+where, μ, and b are user-defined parameters, and b << 1. By differentiating the resulting potential field
+(13), and choosing β >> η it is possible to guarantee that each CT i contains a set of local minima of U ,
+and the robot is stabilized by (16). As part of the proposed research, the closed-loop stability of (17) will
+be analyzed for the case of obstacles and targets that are sensed online, and for a robotic sensor that follows
+the roadmap as a result of being stuck in a local minimum of U . This analysis will be conducted by means
+of the dual heuristic programming error,
+ˆ
+ˆ
+∂ J(t + δt)
+1 ∂ J(t) ∂U (q, t)
+−
+−γ
+ED (t) =
+2
+∂q
+∂q
+∂q
+2
+,
+∞
+ˆ
+where J(t) =
+γ(t)U (q, t)dt,
+(18)
+t
+which approaches zero at optimality. Where, γ(t) is an exponentially decreasing function of time, and the
+integral in (18) can be approximated by means of the corresponding PDF in (15).
+11
+1028506
+3
+Preliminary Results
+This section reviews the preliminary results obtained by the PIs to-date in three separate aspects of the pro-
+posed research: (a) the application of C-targets for a single robotic sensor offline, with perfect knowledge
+of the targets and workspace; (b) the use of a physical graph for coordinating a network of heterogeneous
+sensors offline for mobile target detection, tracking, and pursuit, without any adaptation or optimization ca-
+pabilities, and with perfect knowledge of the workspace; and, (c) offline learning and mission planning via
+Q-learning for a single aerial sensor deployed for static target detection and classification. The results ob-
+tained from (a), recently presented in [25, 49], can be illustrated through the example in Fig. 3(a). Here, the
+C-targets are used to plan the path of a non-overpass capable robotic sensor that can be seriously damaged or
+even destroyed when driving over landmines [60]. A path that avoids vehicle collisions with both obstacles
+and targets is obtained while also maximizing the information value of the measurement sequence. Exten-
+sive numerical simulations in [25, 49], demonstrate that, by using C-targets, the classification and energy
+efficiency of the robotic sensor is greatly improved compared to existing planning algorithms.
+0
+qf
+5
+T8
+T5
+10
+T4
+15
+20
+T2
+T7
+T1
+T6
+yr 25
+30
+35
+40
+q0
+45
+T3
+q0, qf
+A
+q(t)
+S
+(a)
+50
+0
+5
+10
+15
+20
+25
+xr
+30
+35
+40
+45
+50
+(b)
+Figure 3: Optimal path of a demining robotic sensor (a); UAV-IR’s FOV (magenta) and targets measured at
+an altitude of 1.6 km (b).
+Figure 4: Network coordination simulation example, where ground sensors are plotted in red (green if the
+ground sensor is in pursuit mode), aerial sensors in magenta, moving targets are blue polygons, detections
+are yellow diamonds, and obstacles are black polygons.
+As shown in [2,9–14], the PIs have collaboratively developed and demonstrated an offline robotic sensor
+coordination algorithm (b) through both virtual and physical experiments using the Player/Stage/Gazebo
+software and the COMET testbed described in Section 4. Movies of the results from the COMET testbed
+12
+1028506
+can be found at [61]. A simulation example is shown in Fig. 4, where it can be seen that, with perfect
+knowledge of W, the sensor network is coordinated such that the aerial vehicles are deployed in detection
+mode, regardless of the obstacles on the ground, while the ground vehicles are deployed in detection or
+pursuit pursuit mode (plotted in green). Some of the shortcomings of the present coordination algorithm,
+which will be overcome by the proposed research, are that it does not optimize the mission plan, it is not
+adaptive, and it does not account for the dynamical constraints of the vehicles, or CSPi . In (c), the Q-
+learning rule proposed in Section 2.3 was demonstrated by planning the altitude of an unmanned aerial
+vehicle equipped with an onboard infrared (UAV-IR) sensor to detect and classify landmines without a
+complete model of the plant. The Q-function was successfully learned offline after flying repeatedly over the
+minefield W, as shown in Fig. 3(b). As a result, an optimal greedy altitude was determined that maximized
+the number of landmine detections, and minimized the number of false alarms.
+4
+Experiments: Real-Time Cooperative Multivehicle Testbed (COMET)
+The strategies and algorithms developed in this project will be implemented and experimentally validated
+on a multi-vehicle testbed of heterogeneous (ground and aerial) vehicles COMET, at University of New
+Mexico (UNM) [14]. We plan to test the reliability and robustness of the proposed algorithms in realistic
+settings, where the agents perform a wide range of sensing and motion tasks. It is important to realize
+that COMET is suited to testing ADP control algorithms because it allows them to be mapped into actual
+continuous-time signals (e.g., voltages, torques, forces, etc.) in real time. The COMET testbed consists of
+ten all-terrain autonomous ground vehicles, two indoor mobile platforms (Scorpion robots from Evolution
+Robotics), five Pioneer 3-AT robots and three quad-rotors that are used for testing multi-agent decentralized
+algorithms in applications such as multi-modal sensing, robot routers, and search-and-rescue. The main
+goals when designing this testbed were to make it affordable, modular, and reliable. Our current testbed can
+accommodate laser-based navigation, GPS navigation, as well as gripper/manipulator tasks. The vehicles
+(see Figure 5) are versatile enough to be used indoors or outdoors in good weather. Recently, we have
+also included mechanisms that allow for environmental sensing, which enable validation and verification of
+cooperative control algorithms that depend on measurements of the sensed environment, as explained below.
+Figure 5: COMET testbed [14]. (Left) Four precision light sensors (top) three magnetic sensors (middle)
+and a Hokuyo UHG-08LX laser range finder (bottom) all mounted on a custom fixture attached to a robot.
+(Center) A Hummingbird quad-rotor. (Right) A team of 10 all-terrain vehicles moving in formation.
+Vehicle Description: The Pioneer P3-AT stores up to 252 watt-hours of hot-swappable batteries. The P3-
+AT can reach speeds of .8 meters per second and carry a payload of up to 30 kg as well as climb a steep
+45% gradient. Laser-based navigation options, integrated inertial correction to compensate for slippage,
+GPS, bumpers, gripper, vision, stereo rangefinders, and compass options are available for the P3-AT [38].
+In addition, the testbed contains ten all-terrain vehicles which are based on the Tamiya TXT-1 chasis, one
+Drangonflyer X-Pro quadrotor, and two AscTec Hummingbird quadrotors from Ascending Technologies,
+GmbH [62], with localization information being provided by a VICON motion capture system [63], running
+13
+1028506
+at 250 Hz with millimeter accuracy. Control commands are sent to each UAV via Zigbee at 20 Hz. The
+payload capacity of the vehicle is specified as of 0.2 kg with a physical dimension bound by a sphere of
+radius R = 0.3 m.
+Environmental Sensor Suite: The environmental sensor suite consists of a Phidgets 8/8/8 USB interface
+I/O board capable of measuring eight digital and eight analog inputs and capable of driving eight digital
+outputs. The Phidgets I/O board can accommodate pressure, temperature, humidity, light intensity, and
+magnetic field sensors as well as many others. A special aluminium plate and mounting system was created
+to interface the environmental sensor suite. The plate and mounting system allows for multiple sensor
+configurations as well as the ability to mount multiple accessories on each robotic platform. Figure 5 shows
+the custom built aluminum plate with four precision light sensors and three magnetic sensors. Also shown
+is a Hokuyo UHG-08LX laser range finder. The addition of the custom plate and mounting brackets allow
+for a quick swapping of sensors and accessories to address a variety of experimental tests. The experimental
+testbed has its own dedicated IEEE 802.11 WLAN, which provides a low-latency network that is used by
+the robotic platforms for communication as well as for Player server/client communications.
+4.1 Player/Stage/Gazebo/USARSim Interface
+As part of the proposed activity, the PIs will develop and validate the coordination and control algorithms
+within common synthetic environments, simulated both in the LISC [64] and the M ARHES [14], by using the
+robotics software packages is the Player/Stage/Gazebo (PSG) [65]. The PSG project consists of libraries that
+provide access to communication and interface functionality on robot hardware. The robot “server” Player,
+provides an architecture where multiple modules, also known as drivers, can be written independently and
+connected via a custom middleware that relies on TCP communication. Users write “client” applications
+(control algorithms) that connect to and command modules (drivers) running on a Player “server.” Addi-
+tionally, PSG provides a 2D simulator, Stage, and a 3D physics-based simulation environment Gazebo. The
+graduate and undergraduate students involved in this project will also use USARSim [66], a high-fidelity
+simulator of robots as well as environments which is based upon the Unreal Tournament game engine which
+can be used with a Player “server.” USARSim allows for realistic robotic environments with kinematically
+accurate robot models. These simulators provide a transparent transition from simulation code using a vir-
+tual environment to the actual robot hardware. Developing an experimental robotic network serves not only
+a research purpose but also an educational purpose, as undergraduate and graduate students work together
+to solve the challenges that occur when developing a prototype.
+5
+Applications and Broader Impacts
+The broader impact of the proposed research is the development and demonstration of autonomous robotic
+sensor networks for three applications with great societal impact, namely, demining, search and rescue oper-
+ations, and ambient monitoring. The online adaptive algorithms developed in this activity will be verified on
+synthetic minefield using software available in the LISC [64], as well as advanced synthetic virtual reality
+software, and possibly real unmanned aerial sensors, through the PI’s collaboration with BAE Sensor System
+Division, Honolulu (HI). Since World Word II numerous conflicts resulted in the planting of millions of land-
+mines that cause tens of thousands casualties each year [67]. The proposed approach will make demining
+systems not only more effective but also more affordable by optimizing the use of reconfigurable sensors
+and the probability of false alarms, which typically cause platforms to be needlessly deployed. Through
+the proposed activity, the PIs will collaborate closely with Professor Marconi at the University of Bologna,
+Italy, on demonstrating the proposed approach for alpine surveillance and rescuing operations. The goal of
+Marconi’s ongoing research is to utilize ground robots that search for stranded persons in the Italian Alps, in
+conjunction with an aerial vehicle that maintains connectivity with and assists a human operator who may be
+far removed from the ground robots and potential targets. Applications involving ambient monitoring and
+surveillance in complex and obstacle-populated environments, e.g. rescue operations following hurricanes
+or earthquakes, would also greatly benefit from the proposed research, because they require robots to search
+for and reach survivors, while avoiding obstacles, such as fallen trees or ruins, online.
+14
+1028506
+Educational Activities and Dissemination: The PIs have a very successful track record at mentoring
+students, including female students and underrepresented minorities, to successfully complete and publish
+hardware/software projects [2–8]. As an example, the PIs recently co-authored a journal paper on disjunc-
+tive programming with a female Duke undergraduate student, Ashleigh Swingler [9], who now intends to
+pursue a Ph.D. and an academic career in the area of robotics and control. UNM is a U.S. Dept. of Educa-
+tion Institution With High Hispanic Enrollment, which gives the PI (R.F.) a unique opportunity to involve
+underrepresented groups in science and technology research that is growing rapidly in New Mexico, an EP-
+SCoR state. In this activity, the PIs will train two Ph.D. students who will spend time at both Duke and
+UNM, and recruit undergraduate students to participate in the PSG/USARSim simulations through the Pratt
+Fellow program at Duke and the Ronald E. McNair program at UNM, as well as summer internships in the
+LISC and M ARHES. The PIs have recently developed integrated sensor simulation environments using Mat-
+lab Graphical User Interfaces (GUIs) and PSG that include robotic demining [47], ocean sensors [68, 69],
+the board game of CLUE (with Hasbro’s permission) [39], and the Marco Polo game [10]. Using the
+CLUE GUI, K-12 students from the Chapel Hill (NC) public schools have already participated in testing
+a Bayesian network intelligent player trained to optimally play the game. Through the proposed activity,
+Duke and UNM students will develop new integrated simulation environments for the aforementioned ap-
+plications, and work with K-12 students to test the algorithms developed in this research through games
+and search-and-rescue applications. The proposed activity will leverage robotic games, developed by the
+PI (R.F.), to stimulate interest of Native American children in robotics [70], and activities organized by the
+IEEE Technical Committee on Games (of which the PI (S.F.) is a member), such as the CIG computer game
+competitions at CIG international meetings and symposia [71]. Finally, the PIs will make all of the software
+developed through this activity available on the LISC website [64].
+Project Management and Schedule: The PIs will work closely with the Duke and UNM graduate
+students to develop a fully integrated adaptive/NHDS approach. The approach will be tested on PSG sim-
+ulations using robot and sensor modules from hardware in COMET [14]. Fierro will supervise the UNM
+graduate student to design several mission scenarios in COMET and PSG, and then send the PSG code
+to Duke. After testing in PSG/USARSim, the algorithms will be verified through physical experiments in
+COMET. In the first year of the project, the basic theory and approach will be developed and verified at Duke
+and UNM. In the second year, the PI (S.F.) will spend four sabbatical months at the University of Bologna,
+where she will collaborate with Marconi and extend this research to alpine rescue operations. The PIs will
+also collaborate with BAE to extend the approach to UAV littoral demining, and with ISRC on ambient
+monitoring. Through these collaborations, by the second year the PIs will have designed realistic integrated
+sensor environments for all three applications. In the third year, synthetic and physical simulations of these
+applications will be utilized to refine the methodology, and to demonstrate the effectiveness of the resulting
+sensor networks for search and rescue, demining, monitoring and surveillance.
+6
+Results from prior NSF support
+Silvia Ferrari has been supported by four NSF grants on the general topics of adaptive critics and learning
+aircraft control. The award more closely related to this project is NSF #ECS-0448906, “CAREER: Ro-
+bust Adaptive Control, Demonstrated for Reconfigurable Flight Control,” June ’05–May ’10, 400K. Through
+this award, the PI has founded the Laboratory of Intelligent Systems and Controls (LISC) [64], and has pub-
+lished five journal papers and six conference papers. She has trained one Ph.D. student, developed a graduate
+course on Intelligent Systems, and participated in several dissemination activities and NSF workshops. As
+a result of this award, the PI was able to demonstrate the effectiveness of ADP control for reconfigurable
+flight, and avert loss of control in a variety of emergency situations, including unmodeled stall and control
+failures. Rafael Fierro has been been recently supported by four NSF grants on the general topics of hy-
+brid dynamical systems and autonomous vehicles. The award more closely related to this project is NSF
+#0811347, “CAREER: Coordination of Dynamic Networks - A Hybrid System Approach”, April ’04–
+March ’10, 400K. Through this award, the PI has published over ten papers, graduated one Ph.D. student,
+and developed robotic games to involve underrepresented minorities in science and engineering.
+15
+1028506
+References Cited
+[1] J. P. How, B. Bethke, A. Frank, D. Dale, and J. Vian, “Real-time indoor autonomous vehicle test
+environment,” IEEE Control Systems Magazine, vol. April, pp. 51–64, 2008.
+[2] S. Ferrari, R. Fierro, and D. Tolic, “A geometric optimization approach to tracking maneuvering targets
+using a heterogeneous mobile sensor network,” in Proceedings of the IEEE Conference on Decision
+and Control, Shanghai, China, December 16-18 2009, to appear.
+[3] J. McClintock and R. Fierro, “A hybrid system approach to formation reconfiguration in cluttered
+environments,” in 16th Mediterranean Conference on Control and Automation, ser. 83-88, Corsica,
+France, June 2008.
+[4] R. Fierro, L. Chaimowicz, and V. Kumar, “Multi-robot cooperation,” in Autonomous Mobile Robots:
+Sensing, Control, Decision Making and Applications, ser. Control Engineering, S. S. Ge and F. L.
+Lewis, Eds. CRC Press - Taylor & Francis Group, May 2006, ch. 11, pp. 417–459.
+[5] C. Branca and R. Fierro, “A hierarchical optimization algorithm for cooperative vehicle networks,” in
+Proceedings of the American Control Conference, Minneapolis, MN, June 14-16 2006, pp. 4225–4230.
+[6] R. Alur, A. Das, J. Esposito, R. Fierro, Y. Hur, G. Grudic, V. Kumar, I. Lee, J. P. Ostrowski, G. Pappas,
+J. Southall, J. Spletzer, and C. J. Taylor, “A framework and architecture for multirobot coordination,”
+in Experimental Robotics VII, D. Rus and S. Singh, Eds. Springer Verlag, 2001, pp. 303–312.
+[7] R. Fierro, F. L. Lewis, and A. Lowe, “Hybrid control for a class of underactuated mechanical systems,”
+IEEE Trans. on Syst., Man, and Cyber., vol. 29, no. 6, pp. 649–654, Nov. 1999.
+[8] R. Fierro and F. L. Lewis, “A framework for hybrid control design,” IEEE Trans. on Syst., Man, and
+Cyber., vol. 27-A, no. 6, pp. 765–773, Nov. 1997.
+[9] N. Bezzo, R. Fierro, A. Swingler, and S. Ferrari, “A disjunctive programming approach for motion
+planning of mobile router networks,” Int. J. Robot. Automat., 2010, accepted.
+[10] S. Ferrari, R. Fierro, B. Perteet, C. Cai, and K. Baumgartner, “A geometric optimization approach to
+detecting and intercepting dynamic targets using a mobile sensor network,” SIAM Journal on Control
+and Optimization, vol. 48, no. 1, pp. 292–320, 2009, special Issue on Control and Optimization in
+Cooperative Networks.
+[11] D. Tolic, R. Fierro, and S. Ferrari, “Cooperative multi-target tracking via hybrid modeling and geo-
+metric optimization,” in 16th Mediterranean Conference on Control and Automation, Thessaloniki,
+Greece, June 2009, pp. 440–445, invited.
+[12] R. Fierro, S. Ferrari, and C. Cai, “An information-driven framework for motion planning in robotic
+sensor networks: Complexity and experiments,” in Proceedings of the IEEE Conference on Decision
+and Control, Cancun, Mexico, December 9-11 2008, pp. 483–489.
+[13] S. Ferrari, C. Cai, R. Fierro, and B. Perteet, “A geometric optimization approach to detecting and
+intercepting dynamic targets,” in Proceedings of the American Control Conference, New York City,
+July 2007, pp. 5316–5321.
+[14] Multi-Agent, Robotics, Hybrid, and Embedded Systems Laboratory, University of New Mexico.
+[Online]. Available: http://marhes.ece.unm.edu/index.php/Main Page
+[15] Intelligent Systems Research Center, University of Ulster, UK. [Online]. Available:
+//isrc.ulster.ac.uk/
+http:
+1028506
+[16] M. Boccadoro, P. Valigi, and Y. Wardi, “A method for the design of optimal switching surfaces for
+autonomous hybrid systems,” in Lecture Notes in Computer Science, 2007, pp. 650–655.
+[17] M. Shaikh and P. Caines, “On the optimal control of hybrid systems: Optimization of trajectories,
+switching times, and location schedules,” Lecture Notes in Computer Science, vol. 2623, pp. 466–481,
+2003.
+[18] C. Cassandras, C. Pepyne, and Y. Wardi, “Generalized gradient algorithms for hybrid system models
+of manufacturing systems,” in IEEE Conference on Decision and Control, 1998, pp. 2627–2632.
+[19] R. Padhi, N. Unnikrishnan, X. Wang, and S. N. Balakrishnan, “Optimal control synthesis of a class of
+nonlinear systems using single network adaptive critics,” Neural Networks, vol. 19, no. 1, pp. 1648–
+1660, 2006.
+[20] P. Antsaklis, M. Lemmon, and J. Stiver, “Modeling and design of hybrid control systems,” Proc. IEEE
+Mediterranean Symp. New Directions Control Automation,, p. 440447, 1994.
+[21] R. Brockett, “Hybrid models for motion control systems,” in Essays on Control: Perspectives in the
+Theory and its Applications, Boston, MA, 1993, pp. 29–53.
+[22] S. Mart ́nez, F. Bullo, J. Cort ́ s, and E. Frazzoli, “On synchronous robotic networks. part i: Models,
+ı
+e
+tasks and complexity notions,” in Proc. IEEE Conf. on Decision and Control, and the European Control
+Conf., Seville, Spain, December 12-15 2005, pp. 2847–2852.
+[23] M. Zavlanos and G. Pappas, “Distributed hybrid control for multiple pursuer multiple evader games,”
+in 10th International Conference on Hybrid Systems: Computation and Control, Pisa, Italy, April
+2007, pp. 787–789.
+[24] R. Sanfelice and E. Frazzoli, “A hybrid control framework for robust maneuver-based motion plan-
+ning,” in Proc. American Control Conference, Seattle, WA, 2008, pp. 2254–2259.
+[25] C. Cai and S. Ferrari, “Information-driven sensor path planning by approximate cell decomposition,”
+IEEE Transactions on Systems, Man, and Cybernetics - Part B, vol. 39, 2009.
+[26] C. Cassandras and J. Lygeros, Stochastic Hybrid Systems. CRC Press, 2006.
+[27] S. M. LaValle, Planning Algorithms.
+Cambridge University Press, 2006.
+[28] J. C. Latombe, Robot Motion Planning. Kluwer Academic Publishers, 1991.
+[29] S. Koenig, C. Tovey, and Y. Smirnov, “Performance bounds for planning in unknown terrain,” Artificial
+Intelligence, vol. 147, 2003.
+[30] N. Rao, “Robot navigation in unknown generalized polygonal terrains using vision sensors,” IEEE
+Transactions on System, Man, and Cybernetics, vol. 25, no. 6, pp. 947–962, 1995.
+[31] G. Oriolo, G. Ulivi, and M. Vendittelli, “Real-time map building and navigation for autonomous robots
+in unkown environments,” IEEE Transactions on System, Man, and Cybernetics, vol. 28, no. 3, pp.
+316–333, 1995.
+[32] J. Leonard, H. Durrant-Whyte, and I. Cox, “Dynamic map building for an autonomous mobile robot,”
+International Journal of Robotic Research, vol. 11, no. 4, 1992.
+[33] S. Thurn, “Learning metric-topological maps for indoor mobile robot navigation,” Artificial Intelli-
+gence, vol. 99, 1998.
+1028506
+[34] J. C. Latombe, A. Lazanas, and S. Shekhar, “Robot motion planning with uncertainty in control and
+sensing,” Artificial Intelligence, vol. 52, 1991.
+[35] A. Lazanas and J. C. Latombe, “Motion planning with uncertainty - a landmark approach,” Artificial
+Intelligence, vol. 76, pp. 287–317, 1995.
+[36] E. U. Acar, “Path planning for robotic demining: Robust sensor-based coverage of unstructured envi-
+ronments and probabilistic methods,” International Journal of Robotic Research, vol. 22, 2003.
+[37] D. Miklic, S. Bogdan, and R. Fierro, “Decentralized grid-based algorithms for formation reconfigura-
+tion and synchronization,” in IEEE Int. Conf. on Robotics and Automation, Anchorage, Alaska, June
+2010, accepted.
+[38] D. Cruz, J. McClintock, B. Perteet, O. Orqueda, Y. Cao, and R. Fierro, “Decentralized cooperative
+control: A multivehicle platform for research in networked embedded systems,” IEEE Control Systems
+Magazine, vol. 27, no. 3, pp. 58–78, June 2007.
+[39] S. Ferrari and C. Cai, “Information-driven search strategies in the board game of CLUE ,” IEEE
+Transactions on Systems, Man, and Cybernetics - Part B, vol. 39, no. 2, 2009.
+[40] S. Ferrari and R. Stengel, “On-line adaptive critic flight control,” Journal of Guidance, Control, and
+Dynamics, vol. 27, no. 5, pp. 777–786, 2004.
+[41] ——, “Model-based adaptive critic designs,” in Learning and Approximate Dynamic Programming,
+J. Si, A. Barto, and W. Powell, Eds. John Wiley and Sons, 2004.
+[42] C. Atkenson, A. Moore, and S. Schaal, “Locally weighted learning for control,” Artificial Intelligence
+Review, vol. 11, pp. 75–113, 1997.
+[43] S. Ge and Y. Cui, “New potential functions for mobile robot path planning,” IEEE Transactions on
+Robotics and Automation, vol. 16, no. 5, 2000.
+[44] E. Rimon and D. Kodischek, “Exact robot navigation using artificial potential functions,” IEEE Trans-
+actions on Robotics and Automation, vol. 8, no. 5, 1992.
+[45] K. Kastella, “Discrimination gain to optimize detection and classification,” IEEE Trans. Systems, Man,
+and CyberneticsPart A:Systems and Humans, vol. 27, no. 1, pp. 112–116, 1997.
+[46] C. Kreucher, K. Kastella, and A. Hero, “Sensor management using an active sensing approach,” Signal
+Processing, vol. 85, pp. 607–624, 2005.
+[47] S. Ferrari and A. Vaghi, “Demining sensor modeling and feature-level fusion by bayesian networks,”
+IEEE Sensors, vol. 6, pp. 471–483, 2006.
+[48] C. Cai, S. Ferrari, and Q. Ming, “Bayesian network modeling of acoustic sensor measurements,” in
+Proc. IEEE Sensors, Atlanta, GA, 2007, pp. 345–348.
+[49] G. Zhang, S. Ferrari, and M. Qian, “An information roadmap method for robotic sensor path planning,”
+Journal of Intelligent and Robotic Systems, vol. 56, pp. 69–98, 2009.
+[50] D. Heckerman, D. Geiger, and D. M. Chickering, “Learning bayesian networks: The combination of
+knowledge and statistical data,” Machine Learning, vol. 20, pp. 197–243, 1995.
+[51] Y. Bar-Shalom, X. R. Li, and T. Kirubarajan, Estimation with applications to tracking and navigation:
+Algorithms and software for information extraction. John Wiley and Sons, 2001.
+1028506
+[52] S. Mahadevan, M. Ghavamzadeh, K. Rohanimanesh, and G. Theocharous, “Hierarchical approaches
+to concurrency, multiagency, and partial observability,” in Learning and Approximate Dynamic Pro-
+gramming, J. Si, A. Barto, and W. Powell, Eds. John Wiley and Sons, 2004, pp. 285–310.
+[53] M. Fox, M. Ghallab, G. Infantes, and D. Long, “Robot introspection through learned hidden markov
+models,” Artificial Intelligence, vol. 170, pp. 59–113, 2006.
+[54] J. Ren and K. Mclsaac, “A hybird-systems approach to potential field navigation for a multi-robot
+team,” in Proc. of IEEE International Conference on Robotics and Automation, Taipei, Taiwan, 2003,
+pp. 3875–3880.
+[55] S. Shimoda, Y. Kuroda, and K. Iagnemma, “Potential field navigation of high speed unmanned ground
+vehicles on uneven terrain,” in Proc. of IEEE International Conference on Robotics and Automation,
+Barcelona, Spain, 2005, pp. 2839–2844.
+[56] T. G. Dietterich, “Hierarchical reinforcement learning with the maxq value function decomposition,”
+International Journal of Artificial Intelligence Research, vol. 13, pp. 227–303, 2000.
+[57] R. E. Parr, Hierarchical Control and Learning for Markov Decision Processes.
+Thesis, University of California, 1998.
+Berkeley, CA: Ph.D.
+[58] Z. Sun and J. Reif, “On robotic optimal path planning in polygonal regions with pseudo-eucledian
+metrics,” IEEE Transactions on Systems, Man, and Cybernetics - Part A, vol. 37, no. 4, pp. 925–936,
+2007.
+[59] G. Casella and R. Berger, Satistical Inference. Duxbury Press, 2001.
+[60] R. Siegel, “Land mine detection,” IEEE Instrumentation and Measurement Magazine, vol. 5, no. 4, pp.
+22–28, 2002.
+[61] “Comet movies,” Website, http://wiki.ece.unm.edu/movies.
+[62] Ascending Technologies, GmbH. [Online]. Available: http://www.asctec.de
+[63] Vicon Motion Systems, Inc. [Online]. Available: http://www.vicon.com
+[64] “Laboratory for intelligent systems and controls (lisc),” Website, http://fred.mems.duke.edu/.
+[65] “The player project,” Website, http://playerstage.sourceforge.net.
+[66] “Usarsim,” Website, http://usarsim.sourceforge.net/.
+[67] J. MacDonald, Alternatives for Landmine Detection. Rand Publications, 2003.
+[68] K. C. Baumgartner, S. Ferrari, and T. Wettergren, “Robust deployment of dynamic sensor networks for
+cooperative track detection,” IEEE Sensors, vol. 9, no. 9, pp. 1029–1048, 2009.
+[69] K. C. Baumgartner, S. Ferrari, and A. Rao, “Optimal control of an underwater sensor network for
+cooperative target tracking,” IEEE Journal of Oceanic Engineering, vol. 34, no. 4, pp. 678–697, 2009.
+[70] B. Perteet, J. McClintock, and R. Fierro, “A multi-vehicle framework for the development of robotic
+games: The Marco Polo case,” in IEEE Int. Conf. on Robotics and Automation, Rome, Italy, April
+10-14 2007, pp. 3717–3722.
+[71] “Ieee competitions, ieee symposium on computational intelligence adn games,” Website, http://www.
+ieee-cig.org/cig-2009/competitions/.
+1028506
+

@@ -1,0 +1,41 @@
+%%
+clear,clc,close all
+x_robot= 22.57; y_robot= -1287.98; z_robot=935.1; p= -0.89; q= 5.02; r=-165.48; x_goal=-436.78; y_goal=-337.36; z_goal=52.13
+
+X_OFFSET =  -9.6600;% CHANGE TO THE ONES WRITEN IN THE CODE
+Y_OFFSET =  6.00/1000;
+Z_OFFSET =  -122.61/1000;
+
+p_OFFSET=[X_OFFSET;Y_OFFSET;Z_OFFSET]
+p_GOAL=[x_goal;y_goal;z_goal]
+
+ca= cosd(p); 
+cb= cosd(q);
+ct= cosd(r);
+sa= sind(p);
+sb= sind(q); 
+st= sind(r); 
+
+Rz=[ct   -st   0;
+    st    ct   0;
+     0     0   1];
+Ry=[cb    0   sb;
+     0    1    0;
+   -sb    0   cb];
+Rx=[    1   0   0;
+        0  ca -sa;
+        0  sa  ca];
+       
+R_rot=Rx*Ry*Rz
+
+relVect=R_rot(1:3,1:3)*p_OFFSET
+v_rel=[x_goal - x_robot - relVect(1,1), y_goal - y_robot - relVect(2,1), z_goal- z_robot- relVect(3,1)]'
+
+Rzee=[-1/sqrt(2)    1/sqrt(2)   0;
+      -1/sqrt(2)    -1/sqrt(2)   0;
+          0        0   1];
+Rxee=[ 1      0       0;
+       0     -1       0;
+       0      0       -1];
+
+v_rel_End_Effector= (Rxee*Rzee*(R_rot)')*[v_rel(1) v_rel(2) v_rel(3)]'
